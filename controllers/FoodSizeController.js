@@ -1,30 +1,36 @@
 const {PrismaClient} = require('@prisma/client');
+const { list } = require('./FoodTypeController');
 const prisma = new PrismaClient();
+
 
 module.exports = {
     create: async (req, res) => {
         try {
-            const {name, remark} = req.body;
+            const {name, foodTypeId, price, remark} = req.body;
 
-            console.log(name, remark);
-            const foodType = await prisma.foodType.create({
+
+            
+            const foodSize = await prisma.foodSize.create({
                 data: {
                     name: name,
+                    foodTypeId: typeof foodTypeId === 'string' ? parseInt(foodTypeId) : foodTypeId,
+                    moneyAdded: price,
                     remark: remark ?? "",
-                    status: "use",
                 },
             });
 
-            res.status(201).json({message: 'Food type created', results: foodType});
+            res.status(201).json({message: 'Food size created', results: foodSize});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: 'Internal server error'});
         }
     },
-
     list: async (req, res) => {
         try {
-            const foodTypes = await prisma.foodType.findMany({
+            const foodSizes = await prisma.foodSize.findMany({
+                include: {
+                    foodType: true
+                },
                 where: {
                     status: 'use',
                 },
@@ -33,26 +39,24 @@ module.exports = {
                 },
             });
 
-            res.status(200).json({results: foodTypes});
+            res.status(200).json({results: foodSizes});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: 'Internal server error'});
         }
     },
-
     remove: async (req, res) => {
         try {
             const {id} = req.params;
-            const foodType = await prisma.foodType.update({
-                where: {
-                    id: parseInt(id),
-                },
+            const foodSize = await prisma.foodSize.update({
                 data: {
                     status: 'deleted',
+                },where: {
+                    id: parseInt(id),
                 },
             });
 
-            res.status(200).json({message: 'Food type deleted', results: foodType});
+            res.status(200).json({message: 'Food size deleted', results: foodSize});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: 'Internal server error'});
@@ -62,22 +66,24 @@ module.exports = {
     update: async (req, res) => {
         try {
             const {id} = req.params;
-            const {name, remark} = req.body;
+            const {name, foodTypeId, price, remark} = req.body;
 
-            const foodType = await prisma.foodType.update({
+            const foodSize = await prisma.foodSize.update({
                 where: {
                     id: parseInt(id),
                 },
                 data: {
                     name: name,
+                    foodTypeId: typeof foodTypeId === 'string' ? parseInt(foodTypeId) : foodTypeId,
+                    moneyAdded: price,
                     remark: remark ?? "",
                 },
             });
 
-            res.status(200).json({message: 'Food type updated', results: foodType});
+            res.status(200).json({message: 'Food size updated', results: foodSize});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: 'Internal server error'});
         }
     },
-}
+};
