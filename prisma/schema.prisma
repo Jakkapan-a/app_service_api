@@ -31,8 +31,9 @@ model FoodType {
   status    String  @default("use") // use, delete
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  FoodSize  FoodSize[]
-}
+  FoodSizes  FoodSize[]
+  Tastes Taste[]
+ }
 
 model FoodSize{
   id        Int     @id @default(autoincrement())
@@ -40,8 +41,19 @@ model FoodSize{
   remark    String?
   moneyAdded Int @default(0)
   status    String  @default("use") // use, delete
-  foodTypeId Int
-  foodType   FoodType @relation(fields: [foodTypeId], references: [id])
+  FoodTypeId Int
+  FoodType   FoodType @relation(fields: [FoodTypeId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Taste {
+  id        Int     @id @default(autoincrement())
+  name      String
+  remark    String?
+  status    String  @default("use") // use, delete
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  FoodTypeId Int
+  FoodType   FoodType @relation(fields: [FoodTypeId], references: [id])
 }

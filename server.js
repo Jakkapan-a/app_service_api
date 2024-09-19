@@ -34,11 +34,17 @@ app.delete('/api/food-size/:id', (req, res) => FoodSizeController.remove(req, re
 app.put('/api/food-size/:id', (req, res) => FoodSizeController.update(req, res));
 
 
+// Taste routes
+app.post('/api/taste', (req, res) => TasteController.create(req, res));
+app.get('/api/taste', (req, res) => TasteController.list(req, res));
+app.delete('/api/taste/:id', (req, res) => TasteController.remove(req, res));
+app.put('/api/taste/:id', (req, res) => TasteController.update(req, res));
 
 
 
 // Get all routes
 const routes = require('express-list-endpoints');
+const TasteController = require('./controllers/TasteController');
 console.table(routes(app));
 
 app.listen(3000, () => {
