@@ -14,46 +14,61 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
-  username  String @unique
+  username  String   @unique
   password  String
   level     String // admin, user
-  status    String  @default("use") // use, delete
+  status    String   @default("use") // use, delete
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model FoodType {
-  id        Int     @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
   remark    String?
-  status    String  @default("use") // use, delete
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  FoodSizes  FoodSize[]
-  Tastes Taste[]
- }
+  status    String     @default("use") // use, delete
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  FoodSizes FoodSize[]
+  Tastes    Taste[]
+  Foods     Food[]
+}
 
-model FoodSize{
-  id        Int     @id @default(autoincrement())
-  name      String
-  remark    String?
-  moneyAdded Int @default(0)
-  status    String  @default("use") // use, delete
+model FoodSize {
+  id         Int      @id @default(autoincrement())
+  name       String
+  remark     String?
+  moneyAdded Int      @default(0)
+  status     String   @default("use") // use, delete
   FoodTypeId Int
   FoodType   FoodType @relation(fields: [FoodTypeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Taste {
-  id        Int     @id @default(autoincrement())
-  name      String
-  remark    String?
-  status    String  @default("use") // use, delete
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  name       String
+  remark     String?
+  status     String   @default("use") // use, delete
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   FoodTypeId Int
   FoodType   FoodType @relation(fields: [FoodTypeId], references: [id])
+}
+
+model Food {
+  id         Int      @id @default(autoincrement())
+  name       String
+  remark     String?
+  money      Int
+  img        String?
+  foodType   String   @default("food") // food, drink
+  status     String   @default("use") // use, delete
+  FoodTypeId Int
+  FoodType   FoodType @relation(fields: [FoodTypeId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

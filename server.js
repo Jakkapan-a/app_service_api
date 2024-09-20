@@ -6,9 +6,14 @@ const UserController = require('./controllers/UserController');
 const cors = require('cors');
 const FoodTypeController = require('./controllers/FoodTypeController');
 const FoodSizeController = require('./controllers/FoodSizeController');
+const FoodController = require('./controllers/FoodController');
+const fileUpload = require('express-fileupload');
+
 app.use(cors())
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/uploads', express.static('uploads'));
 
 app.get('/', (req, res) => {
     res.send({ message: 'Server is running' });
@@ -40,7 +45,12 @@ app.get('/api/taste', (req, res) => TasteController.list(req, res));
 app.delete('/api/taste/:id', (req, res) => TasteController.remove(req, res));
 app.put('/api/taste/:id', (req, res) => TasteController.update(req, res));
 
-
+// Food routes
+app.post('/api/food', (req, res) => FoodController.create(req, res));
+app.post('/api/food/upload', (req, res) => FoodController.upload(req, res));
+app.get('/api/food', (req, res) => FoodController.list(req, res));
+app.put('/api/food/:id', (req, res) => FoodController.update(req, res));
+app.delete('/api/food/:id', (req, res) => FoodController.remove(req, res));
 
 // Get all routes
 const routes = require('express-list-endpoints');

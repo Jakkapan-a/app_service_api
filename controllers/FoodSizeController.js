@@ -6,14 +6,14 @@ const prisma = new PrismaClient();
 module.exports = {
     create: async (req, res) => {
         try {
-            const {name, foodTypeId, price, remark} = req.body;
+            const {name, FoodTypeId, price, remark} = req.body;
 
 
             
             const foodSize = await prisma.foodSize.create({
                 data: {
                     name: name,
-                    foodTypeId: typeof foodTypeId === 'string' ? parseInt(foodTypeId) : foodTypeId,
+                    FoodTypeId: typeof FoodTypeId === 'string' ? parseInt(FoodTypeId) : FoodTypeId,
                     moneyAdded: price,
                     remark: remark ?? "",
                 },
@@ -29,7 +29,7 @@ module.exports = {
         try {
             const foodSizes = await prisma.foodSize.findMany({
                 include: {
-                    foodType: true
+                    FoodType: true
                 },
                 where: {
                     status: 'use',
@@ -66,7 +66,7 @@ module.exports = {
     update: async (req, res) => {
         try {
             const {id} = req.params;
-            const {name, foodTypeId, price, remark} = req.body;
+            const {name, FoodTypeId, price, remark} = req.body;
 
             const foodSize = await prisma.foodSize.update({
                 where: {
@@ -74,7 +74,7 @@ module.exports = {
                 },
                 data: {
                     name: name,
-                    foodTypeId: typeof foodTypeId === 'string' ? parseInt(foodTypeId) : foodTypeId,
+                    foodTypeId: typeof FoodTypeId === 'string' ? parseInt(FoodTypeId) : FoodTypeId,
                     moneyAdded: price,
                     remark: remark ?? "",
                 },
