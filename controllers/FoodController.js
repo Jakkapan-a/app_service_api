@@ -102,6 +102,30 @@ module.exports ={
             console.log(error)
             return res.status(500).send({message: 'Internal server error'})
         }
+    },
+
+    filter: async (req, res) => {
+        try {
+            const {foodType} = req.params;
+            console.log(foodType)
+            const foods = await prisma.food.findMany({
+                include: {
+                    FoodType: true
+                },
+                where: {
+                    status: 'use',
+                    foodType: foodType
+                },
+                orderBy: {
+                    updatedAt: 'desc',
+                },
+            });
+
+            res.status(200).json({results: foods});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: 'Internal server error'});
+        }
     }
 
 }

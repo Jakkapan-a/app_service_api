@@ -49,6 +49,7 @@ app.put('/api/taste/:id', (req, res) => TasteController.update(req, res));
 app.post('/api/food', (req, res) => FoodController.create(req, res));
 app.post('/api/food/upload', (req, res) => FoodController.upload(req, res));
 app.get('/api/food', (req, res) => FoodController.list(req, res));
+app.get('/api/food/filter/:foodType', (req, res) => FoodController.filter(req, res));
 app.put('/api/food/:id', (req, res) => FoodController.update(req, res));
 app.delete('/api/food/:id', (req, res) => FoodController.remove(req, res));
 
