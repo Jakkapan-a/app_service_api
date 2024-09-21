@@ -7,6 +7,7 @@ const cors = require('cors');
 const FoodTypeController = require('./controllers/FoodTypeController');
 const FoodSizeController = require('./controllers/FoodSizeController');
 const FoodController = require('./controllers/FoodController');
+const SaleTempController = require('./controllers/SaleTempController');
 const fileUpload = require('express-fileupload');
 
 app.use(cors())
@@ -53,6 +54,13 @@ app.get('/api/food/filter/:foodType', (req, res) => FoodController.filter(req, r
 app.put('/api/food/:id', (req, res) => FoodController.update(req, res));
 app.delete('/api/food/:id', (req, res) => FoodController.remove(req, res));
 
+
+// sale temp routes
+app.post('/api/sale-temp', (req, res) => SaleTempController.create(req, res));
+app.get('/api/sale-temp/:userId', (req, res) => SaleTempController.list(req, res));
+app.delete('/api/sale-temp-clear/:userId', (req, res) => SaleTempController.clear(req, res));
+app.put('/api/sale-temp-qty', (req, res) => SaleTempController.changeQty(req, res));
+app.delete('/api/sale-temp-remove/:foodId/:userId', (req, res) => SaleTempController.removeItem(req, res));
 // Get all routes
 const routes = require('express-list-endpoints');
 const TasteController = require('./controllers/TasteController');

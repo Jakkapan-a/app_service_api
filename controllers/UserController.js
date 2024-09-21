@@ -23,7 +23,7 @@ module.exports = {
         return res.status(401).json({ message: "Invalid credentials" });
       }
       const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
-      res.status(200).json({ token ,name: user.name})
+      res.status(200).json({ token ,name: user.name, id: user.id});
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal server error" });

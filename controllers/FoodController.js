@@ -9,7 +9,7 @@ module.exports ={
                 data: {
                     name: name,
                     remark: remark ?? "",
-                    money: price,
+                    price: price,
                     foodType: foodType,
                     img: fileName ?? "",
                     FoodTypeId: typeof FoodTypeId === 'string' ? parseInt(FoodTypeId) : FoodTypeId
@@ -71,7 +71,7 @@ module.exports ={
                 data: {
                     name: name,
                     remark: remark ?? "",
-                    money: price,
+                    price: price,
                     foodType: foodType,
                     img: fileName ?? "",
                     FoodTypeId: typeof FoodTypeId === 'string' ? parseInt(FoodTypeId) : FoodTypeId
@@ -107,7 +107,6 @@ module.exports ={
     filter: async (req, res) => {
         try {
             const {foodType} = req.params;
-            console.log(foodType)
             const foods = await prisma.food.findMany({
                 include: {
                     FoodType: true
