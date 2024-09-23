@@ -138,4 +138,52 @@ module.exports = {
             return res.status(500).send({message: 'Internal server error'})
         }
     },
+
+    createDetail: async (req, res) => {
+        try {
+            const {foodId, qty, saleTempId} = req.body
+
+            for(let i =0; i < qty; i++){
+                const oldData = await prisma.saleTempDetail.findFirst({
+                    where: {
+                        foodId: foodId,
+                        saleTempId: saleTempId
+                    }
+                });
+                if(oldData == null){
+                    await prisma.saleTempDetail.create({
+                        data: {
+                            foodId: foodId,
+                            saleTempId: saleTempId
+                        }
+                    })
+                }
+            }
+
+            return res.status(201).send({message: 'success'})
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send({message: 'Internal server error'})
+        }
+    },
+    listSaleTempDetail: async (req, res) => {
+        try {
+            const {saleTempId} = req.params
+            const saleTempDetail = await prisma.saleTempDetail.findMany({
+                include: {
+                    Food: true
+                },
+                where: {
+                    saleTempId: typeof saleTempId === 'string' ? parseInt(saleTempId) : saleTempId
+                },orderBy: {
+                    id: 'desc'
+                }
+            })
+
+            return res.status(200).send({results: saleTempDetail})
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send({message: 'Internal server error'})
+        }
+    },
 }

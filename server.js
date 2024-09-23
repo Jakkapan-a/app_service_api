@@ -38,7 +38,7 @@ app.post('/api/food-size', (req, res) => FoodSizeController.create(req, res));
 app.get('/api/food-size', (req, res) => FoodSizeController.list(req, res));
 app.delete('/api/food-size/:id', (req, res) => FoodSizeController.remove(req, res));
 app.put('/api/food-size/:id', (req, res) => FoodSizeController.update(req, res));
-
+app.get('/api/food-size/filter/:FoodTypeId', (req, res) => FoodSizeController.filter(req, res));
 
 // Taste routes
 app.post('/api/taste', (req, res) => TasteController.create(req, res));
@@ -61,6 +61,10 @@ app.get('/api/sale-temp/:userId', (req, res) => SaleTempController.list(req, res
 app.delete('/api/sale-temp-clear/:userId', (req, res) => SaleTempController.clear(req, res));
 app.put('/api/sale-temp-qty', (req, res) => SaleTempController.changeQty(req, res));
 app.delete('/api/sale-temp-remove/:foodId/:userId', (req, res) => SaleTempController.removeItem(req, res));
+
+// sale temp detail routes
+app.post('/api/sale-temp-detail', (req, res) => SaleTempController.createDetail(req, res));
+app.get('/api/sale-temp-detail/:saleTempId', (req, res) => SaleTempController.listSaleTempDetail(req, res));
 // Get all routes
 const routes = require('express-list-endpoints');
 const TasteController = require('./controllers/TasteController');

@@ -60,18 +60,19 @@ model Taste {
 }
 
 model Food {
-  id         Int        @id @default(autoincrement())
-  name       String
-  remark     String?
-  price      Int
-  img        String?
-  foodType   String     @default("food") // food, drink
-  status     String     @default("use") // use, delete
-  FoodTypeId Int
-  FoodType   FoodType   @relation(fields: [FoodTypeId], references: [id])
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  SaleTemp   SaleTemp[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  remark         String?
+  price          Int
+  img            String?
+  foodType       String           @default("food") // food, drink
+  status         String           @default("use") // use, delete
+  FoodTypeId     Int
+  FoodType       FoodType         @relation(fields: [FoodTypeId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  SaleTemp       SaleTemp[]
+  SaleTempDetail SaleTempDetail[]
 }
 
 model SaleTemp {
@@ -84,4 +85,15 @@ model SaleTemp {
   Food      Food     @relation(fields: [foodId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  addMoney  Int?
+  tasteId   Int?
+}
+
+model SaleTempDetail {
+  id         Int  @id() @default(autoincrement())
+  saleTempId Int
+  addedMoney Int?
+  tasteId    Int?
+  foodId     Int
+  Food       Food @relation(fields: [foodId], references: [id])
 }
