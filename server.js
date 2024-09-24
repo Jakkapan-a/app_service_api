@@ -65,6 +65,11 @@ app.delete('/api/sale-temp-remove/:foodId/:userId', (req, res) => SaleTempContro
 // sale temp detail routes
 app.post('/api/sale-temp-detail', (req, res) => SaleTempController.createDetail(req, res));
 app.get('/api/sale-temp-detail/:saleTempId', (req, res) => SaleTempController.listSaleTempDetail(req, res));
+app.put('/api/sale-temp-detail', (req, res) => SaleTempController.updateFoodSize(req, res));
+
+
+
+
 // Get all routes
 const routes = require('express-list-endpoints');
 const TasteController = require('./controllers/TasteController');

@@ -74,7 +74,7 @@ module.exports = {
                 },
                 data: {
                     name: name,
-                    foodTypeId: typeof FoodTypeId === 'string' ? parseInt(FoodTypeId) : FoodTypeId,
+                    FoodTypeId: typeof FoodTypeId === 'string' ? parseInt(FoodTypeId) : FoodTypeId,
                     moneyAdded: price,
                     remark: remark ?? "",
                 },

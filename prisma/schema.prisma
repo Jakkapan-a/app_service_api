@@ -76,24 +76,24 @@ model Food {
 }
 
 model SaleTemp {
-  id        Int      @id @default(autoincrement())
-  qty       Int
-  price     Int
-  tableNo   Int
-  userId    Int
-  foodId    Int
-  Food      Food     @relation(fields: [foodId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  addMoney  Int?
-  tasteId   Int?
+  id             Int              @id @default(autoincrement())
+  qty            Int
+  price          Int
+  tableNo        Int
+  userId         Int
+  foodId         Int
+  Food           Food             @relation(fields: [foodId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  SaleTempDetail SaleTempDetail[]
 }
 
 model SaleTempDetail {
-  id         Int  @id() @default(autoincrement())
-  saleTempId Int
+  id         Int      @id() @default(autoincrement())
   addedMoney Int?
   tasteId    Int?
   foodId     Int
-  Food       Food @relation(fields: [foodId], references: [id])
+  Food       Food     @relation(fields: [foodId], references: [id])
+  saleTempId Int
+  SaleTemp   SaleTemp @relation(fields: [saleTempId], references: [id])
 }
